@@ -1,14 +1,15 @@
 {
   "name": "opensquad",
   "version": "0.1.8",
-  "description": "Multi-agent orchestration framework — create AI squads that work together",
+  "description": "Multi-agent orchestration framework \u2014 create AI squads that work together",
   "type": "module",
   "bin": {
     "opensquad": "bin/opensquad.js"
   },
   "scripts": {
     "test": "node --test tests/**/*.test.js",
-    "version": "node -e \"require('fs').writeFileSync('templates/_opensquad/.opensquad-version', require('./package.json').version + '\\n')\" && git add templates/_opensquad/.opensquad-version"
+    "version": "node -e \"require('fs').writeFileSync('templates/_opensquad/.opensquad-version', require('./package.json').version + '\\n')\" && git add templates/_opensquad/.opensquad-version",
+    "start": "node bin/opensquad.js"
   },
   "keywords": [
     "claude-code",
