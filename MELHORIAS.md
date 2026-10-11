@@ -15,6 +15,15 @@
 - **P1 — Corrigir as instruções de instalação:** a documentação apresenta o comando `npx opensquad init`, declara Node.js 20+ e explica o comando correspondente ao executar a partir do checkout. A instrução de Compose inexistente foi removida.
 - **P1 — Atualizar dependências vulneráveis do dashboard:** o lockfile foi atualizado dentro das versões compatíveis. `npm audit` passou de 11 alertas para zero no dashboard; o pacote principal também está sem alertas.
 
+### SEC-01 — Restringir o dashboard local ao loopback [P2]
+
+- **Arquivo:** `README.md:68,185` e `src/readme/README.{pt-BR,en,es}.md:27`.
+- **Evidência:** os exemplos executavam `npx serve <dashboard>` sem interface explícita; o padrão documentado pelo utilitário `serve` escuta em `0.0.0.0`.
+- **Impacto:** a página do dashboard e o estado dos squads poderiam ser acessados por outros dispositivos da rede local.
+- **Mudança:** os exemplos agora passam `-l tcp://127.0.0.1:3000` e informam que a página fica disponível apenas na máquina atual.
+- **Aceite:** os quatro exemplos de `serve` especificam o loopback.
+- **Verificação:** `rg -n 'npx serve' README.md src/readme` mostra apenas comandos com `tcp://127.0.0.1:3000`.
+
 ## Pendências
 
 - `TEST-01`: testes automatizados não executados nesta rodada.

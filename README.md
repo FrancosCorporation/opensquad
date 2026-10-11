@@ -65,10 +65,11 @@ O Escritório Virtual é uma interface visual 2D que mostra seus agentes trabalh
 **Passo 2 — Sirva localmente** (no terminal):
 
 ```bash
-npx serve squads/<nome-do-squad>/dashboard
+npx serve -l tcp://127.0.0.1:3000 squads/<nome-do-squad>/dashboard
 ```
 
 **Passo 3 —** Abra `http://localhost:3000` no seu navegador.
+O painel fica disponível somente neste computador.
 
 ## Criando seu Squad
 
@@ -181,10 +182,11 @@ The Virtual Office is a 2D visual interface that shows your agents working in re
 **Step 2 — Serve it locally** (in terminal):
 
 ```bash
-npx serve squads/<squad-name>/dashboard
+npx serve -l tcp://127.0.0.1:3000 squads/<squad-name>/dashboard
 ```
 
 **Step 3 —** Open `http://localhost:3000` in your browser.
+The dashboard is available only on this computer.
 
 ## Creating your Squad
 

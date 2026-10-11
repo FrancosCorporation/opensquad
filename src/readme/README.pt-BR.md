@@ -24,7 +24,8 @@ Durante a criação, o Arquiteto entende o objetivo, propõe os papéis dos agen
 Para acompanhar os agentes em uma interface visual:
 
 1. No IDE, peça `/opensquad dashboard` para gerar o dashboard do squad.
-2. No terminal, execute `npx serve squads/<nome-do-squad>/dashboard`.
+2. No terminal, execute `npx serve -l tcp://127.0.0.1:3000 squads/<nome-do-squad>/dashboard`.
 3. Abra `http://localhost:3000` no navegador.
+   O painel fica disponível somente neste computador.
 
 Consulte as instruções do IDE em `CLAUDE.md`, `AGENTS.md` ou no arquivo de regras criado durante a instalação.
