@@ -1,21 +1,14 @@
 # opensquad
 
-## 🐳 Instalação e Execução (Docker) — recomendado
+## Instalação
 
-### Pré-requisitos
-- [Docker](https://docs.docker.com/get-docker/) + Docker Compose
+**Pré-requisito:** Node.js 20 ou superior.
 
-### Rodar com Docker
 ```bash
-docker compose up --build
+npx opensquad init
 ```
 
-
-### Sem Docker (local)
-```bash
-npm install
-npm start
-```
+Para executar a partir deste repositório, use `npm install` e depois `npm start -- init`. O setup cria os arquivos no diretório atual e instala as dependências do projeto e do dashboard.
 
 
 Crie squads de agentes de IA que trabalham juntos — direto da sua IDE.
@@ -155,6 +148,8 @@ Example:
 ```bash
 npx opensquad init
 ```
+
+Requires Node.js 20 or later. When running from this source checkout, use `npm install` followed by `npm start -- init`. Setup writes files to the current directory and installs the project and dashboard dependencies.
 
 To update an existing installation:
 

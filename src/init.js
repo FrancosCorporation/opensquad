@@ -71,7 +71,7 @@ export async function init(targetDir, options = {}) {
   if (!options._skipPrompts) {
     await installDependencies(targetDir);
   }
-  await writeProjectReadme(targetDir);
+  await writeProjectReadme(targetDir, language);
 
   // Write user preferences
   const prefsPath = join(targetDir, '_opensquad', '_memory', 'preferences.md');
@@ -138,10 +138,20 @@ async function installDependencies(targetDir) {
   execSync('npx playwright install chromium', { cwd: targetDir, stdio: 'inherit' });
 }
 
-async function writeProjectReadme(targetDir) {
-  const readmePath = join(__dirname, 'readme', 'README.md');
+async function writeProjectReadme(targetDir, language) {
+  const readmeFile = {
+    'Português (Brasil)': 'README.pt-BR.md',
+    English: 'README.en.md',
+    Español: 'README.es.md',
+  }[language] || 'README.en.md';
+  const readmePath = join(__dirname, 'readme', readmeFile);
   const content = await readFile(readmePath, 'utf-8');
-  await writeFile(join(targetDir, 'README.md'), content, 'utf-8');
+  const destination = join(targetDir, 'README.md');
+  try {
+    await writeFile(destination, content, { encoding: 'utf-8', flag: 'wx' });
+  } catch (err) {
+    if (err.code !== 'EEXIST') throw err;
+  }
 }
 
 async function copyCommonTemplates(targetDir) {
@@ -189,6 +199,12 @@ async function copyIdeTemplates(ides, targetDir) {
       const destPath = join(targetDir, relativePath);
       const destDir = dirname(destPath);
       await mkdir(destDir, { recursive: true });
+      try {
+        await stat(destPath);
+        continue; // Reconfiguration must preserve existing IDE files.
+      } catch (err) {
+        if (err.code !== 'ENOENT') throw err;
+      }
       await cp(entry, destPath);
       console.log(`  ${t('createdFile', { path: relativePath })}`);
     }
