@@ -12,7 +12,7 @@
 
 - **P1 — Preservar conteúdo do projeto:** a inicialização cria `README.md` somente quando ele ainda não existe e mantém os arquivos de IDE existentes durante uma reconfiguração. A atualização do core continua sendo o caminho para atualizar arquivos gerenciados.
 - **P1 — Respeitar o idioma escolhido:** o README inicial agora é criado em português do Brasil, inglês ou espanhol conforme a seleção.
-- **P1 — Corrigir as instruções de instalação:** a documentação apresenta o comando `npx opensquad init`, declara Node.js 20+ e explica o comando correspondente ao executar a partir do checkout. A instrução de Compose inexistente foi removida.
+- **P1 — Corrigir as instruções de instalação:** a documentação apresenta o comando `npx opensquad init`, declara Node.js 22.13+ e explica o comando correspondente ao executar a partir do checkout. A instrução de Compose inexistente foi removida.
 - **P1 — Atualizar dependências vulneráveis do dashboard:** o lockfile foi atualizado dentro das versões compatíveis. `npm audit` passou de 11 alertas para zero no dashboard; o pacote principal também está sem alertas.
 
 ### SEC-01 — Restringir o dashboard local ao loopback [P2]
@@ -24,8 +24,17 @@
 - **Aceite:** os quatro exemplos de `serve` especificam o loopback.
 - **Verificação:** `rg -n 'npx serve' README.md src/readme` mostra apenas comandos com `tcp://127.0.0.1:3000`.
 
+### Itens da reauditoria
+
+- [x] **P1 — Atualizar o runtime Node.js suportado.** `package.json` agora exige Node.js 22.13+, a imagem usa Node 24 e o Dockerfile instala pelo lockfile via `npm ci`. Node 20 chegou ao fim de suporte em 24/03/2026. A matriz CI 22/24 será validada após o push.
+
+- [x] **PERF-01 — Adiar o carregamento do escritório Pixi [P2].** O build inicial tinha 616,07 kB (192,67 kB gzip) no chunk principal. Agora a cena só é carregada ao selecionar um squad; build local gera `index` de 202,59 kB (63,82 kB gzip) e `OfficeScene` de 411,78 kB (128,36 kB gzip), sem aviso de chunk maior que 500 kB.
+
+- [ ] **DEVOPS-01 — CI de verificações estáticas [P2].** Workflow em Ubuntu 24.04 para Node 22/24 executa instalação limpa, audits, sintaxe JS, build TypeScript/Vite e build Docker; não executa testes. Aguarda o primeiro run remoto.
+
+- [x] **DEVOPS-02 — Reduzir e filtrar o contexto Docker [P2].** O primeiro build enviou 167 MB, incluindo dependências, dashboard, testes e amostras temporárias. `.dockerignore` exclui esses itens, metadados Git e arquivos locais de ambiente/configuração. O rebuild enviou 1,824 MB e construiu a imagem.
+
 ## Pendências
 
 - `TEST-01`: testes automatizados não executados nesta rodada.
-- O build do dashboard passou, mas ainda avisa que o bundle inicial tem cerca de 616 kB sem compressão; avaliar divisão de código em uma melhoria futura.
 - Revisar e documentar uma experiência Docker apenas quando houver um fluxo Compose suportado e validado.

@@ -2,7 +2,7 @@
 
 ## Instalação
 
-**Pré-requisito:** Node.js 20 ou superior.
+**Pré-requisito:** Node.js 22.13 ou superior.
 
 ```bash
 npx opensquad init
@@ -29,7 +29,7 @@ Exemplo:
 
 ## Instalação
 
-**Pré-requisito:** Node.js 20+
+**Pré-requisito:** Node.js 22.13+
 
 ```bash
 npx opensquad init
@@ -144,13 +144,13 @@ Example:
 
 ## Installation
 
-**Prerequisite:** Node.js 20+
+**Prerequisite:** Node.js 22.13+
 
 ```bash
 npx opensquad init
 ```
 
-Requires Node.js 20 or later. When running from this source checkout, use `npm install` followed by `npm start -- init`. Setup writes files to the current directory and installs the project and dashboard dependencies.
+Requires Node.js 22.13 or later. When running from this source checkout, use `npm install` followed by `npm start -- init`. Setup writes files to the current directory and installs the project and dashboard dependencies.
 
 To update an existing installation:
 
