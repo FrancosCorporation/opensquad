@@ -37,6 +37,12 @@ jobs:
         run: npm audit --prefix dashboard --audit-level=high
       - name: Build dashboard
         run: npm run build --prefix dashboard
+      - name: Install squad dashboard template dependencies
+        run: npm ci --prefix templates/dashboard
+      - name: Audit squad dashboard template dependencies
+        run: npm audit --prefix templates/dashboard --audit-level=high
+      - name: Build squad dashboard template
+        run: npm run build --prefix templates/dashboard
 
   docker:
     name: Build Docker image

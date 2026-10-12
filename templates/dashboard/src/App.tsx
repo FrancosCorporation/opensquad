@@ -1,10 +1,16 @@
+import { lazy, Suspense } from "react";
 import { useSquadSocket } from "@/hooks/useSquadSocket";
 import { SquadSelector } from "@/components/SquadSelector";
-import { OfficeScene } from "@/office/OfficeScene";
 import { StatusBar } from "@/components/StatusBar";
+import { useSquadStore } from "@/store/useSquadStore";
+
+const OfficeScene = lazy(() =>
+  import("@/office/OfficeScene").then((module) => ({ default: module.OfficeScene }))
+);
 
 export function App() {
   useSquadSocket();
+  const selectedSquad = useSquadStore((state) => state.selectedSquad);
 
   return (
     <div
@@ -36,7 +42,19 @@ export function App() {
       {/* Main content */}
       <div style={{ display: "flex", flex: 1, overflow: "hidden" }}>
         <SquadSelector />
-        <OfficeScene />
+        {selectedSquad ? (
+          <Suspense
+            fallback={
+              <div role="status" style={sceneMessageStyle}>
+                Loading office…
+              </div>
+            }
+          >
+            <OfficeScene />
+          </Suspense>
+        ) : (
+          <div style={sceneMessageStyle}>Select a squad to monitor</div>
+        )}
       </div>
 
       {/* Footer */}
@@ -44,3 +62,11 @@ export function App() {
     </div>
   );
 }
+
+const sceneMessageStyle = {
+  flex: 1,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  color: "var(--text-secondary)",
+} as const;

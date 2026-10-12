@@ -26,11 +26,13 @@
 
 ### Itens da reauditoria
 
-- [x] **P1 — Atualizar o runtime Node.js suportado.** `package.json` agora exige Node.js 22.13+, a imagem usa Node 24 e o Dockerfile instala pelo lockfile via `npm ci`. Node 20 chegou ao fim de suporte em 24/03/2026. A matriz CI 22/24 será validada após o push.
+- [x] **P1 — Atualizar o runtime Node.js suportado.** `package.json` agora exige Node.js 22.13+, a imagem usa Node 24 e o Dockerfile instala pelo lockfile via `npm ci`. Node 20 chegou ao fim de suporte em 24/03/2026. CI `38199712445` passou em Node 22/24 e build Docker.
+
+- [ ] **SEC-02 — Atualizar dependências do dashboard-template [P1].** A auditoria encontrou 11 vulnerabilidades (8 altas, 2 moderadas e 1 baixa) no `templates/dashboard/package-lock.json`, correspondendo a 31 alertas Dependabot. Manifesto do dashboard ativo e do template são idênticos; o template foi alinhado ao lock limpo e agora também recebe CI de instalação/audit/build. Audit e build locais passaram; CI do novo commit e atualização dos alertas ainda pendentes.
 
 - [x] **PERF-01 — Adiar o carregamento do escritório Pixi [P2].** O build inicial tinha 616,07 kB (192,67 kB gzip) no chunk principal. Agora a cena só é carregada ao selecionar um squad; build local gera `index` de 202,59 kB (63,82 kB gzip) e `OfficeScene` de 411,78 kB (128,36 kB gzip), sem aviso de chunk maior que 500 kB.
 
-- [ ] **DEVOPS-01 — CI de verificações estáticas [P2].** Workflow em Ubuntu 24.04 para Node 22/24 executa instalação limpa, audits, sintaxe JS, build TypeScript/Vite e build Docker; não executa testes. Aguarda o primeiro run remoto.
+- [x] **DEVOPS-01 — CI de verificações estáticas [P2].** Workflow em Ubuntu 24.04 para Node 22/24 executa instalação limpa, audits, sintaxe JS, build TypeScript/Vite e build Docker; não executa testes. Primeira execução `38199712445` passou.
 
 - [x] **DEVOPS-02 — Reduzir e filtrar o contexto Docker [P2].** O primeiro build enviou 167 MB, incluindo dependências, dashboard, testes e amostras temporárias. `.dockerignore` exclui esses itens, metadados Git e arquivos locais de ambiente/configuração. O rebuild enviou 1,824 MB e construiu a imagem.
 
